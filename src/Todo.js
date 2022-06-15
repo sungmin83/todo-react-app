@@ -20,17 +20,32 @@ class Todo extends React.Component {
         });
     }
 
-    enterKetEventHandler = (e) => {
+    enterKeyEventHandler = (e) => {
         if(e.key === 'Enter'){
             this.setState({readOnly: true});
         }
+    }
+
+    editEventHandler = (e) => {
+        const thisItem = this.state.item;
+        thisItem.title = e.target.value;
+        this.setState({item: thisItem});
+    }
+
+    checkboxEventHandler = (e) => {
+        const thisItem = this.state.item;
+        thisItem.done = !thisItem.done;
+        this.setState({item: thisItem});
     }
 
     render() {
         const item = this.state.item;
         return (
             <ListItem>
-                <Checkbox checked={item.done} />
+                <Checkbox 
+                    checked={item.done} 
+                    onChange={this.checkboxEventHandler}
+                />
                 <ListItemText>
                     <InputBase
                         inputProps={{
@@ -44,7 +59,8 @@ class Todo extends React.Component {
                         multiline={true}
                         fullWidth={true}
                         onClick={this.offReadOnlyMode}
-                        onKeyPress={this.enterKetEventHandler}
+                        onChange={this.editEventHandler}
+                        onKeyPress={this.enterKeyEventHandler}
                     />
                 </ListItemText>
 
