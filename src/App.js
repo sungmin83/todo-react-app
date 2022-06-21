@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Todo from './Todo';
 import AddTodo from './AddTodo.js';
@@ -20,19 +21,19 @@ class App extends React.Component {
   };
 
   add = (item) => {
-    call("/todo", "POST", null).then((response) =>
+    call("/todo", "POST", item).then((response) =>
       this.setState({items: response.data})
     );
   };
 
   delete = (item) => {
-    call("/todo", "DELETE", null).then((response) =>
+    call("/todo", "DELETE", item).then((response) =>
       this.setState({items: response.data})
     );
   };
 
   update = (item) => {
-    call("/todo", "PUT", null).then((response) =>
+    call("/todo", "PUT", item).then((response) =>
      this.setState({items: response.data})
     );
   };
@@ -43,7 +44,12 @@ class App extends React.Component {
       <Paper style={{margin: 16}}>
         <List>
           {this.state.items.map((item, idx) => (
-            <Todo item={item} key={item.id} delete={this.delete} />
+            <Todo 
+              item={item}
+              key={item.id}
+              delete={this.delete}
+              update={this.update}
+           />
           ))}
         </List>
       </Paper>
